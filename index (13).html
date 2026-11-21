@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe-ID | Control de Acceso en Obra</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOmFiOGRiMDVjLWFlY2EtNDc5MC1iOWEzLTVlZGU5YjdlZjQwZAAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNo0bGrQTsVMl0hupF6Dciu9QAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6MDJkNjYxY2UtY2I5ZS00MzI3LWE2MGQtMDFlMzA1NGRlYjk5bHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaAqCgijOn9kSYgyJF3u7ggYAAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYICUPGZgJqaofjRZZ/jz3epl/M+6E1j9laW7/1K98QsPLpGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2hHYqiCiVfzXk3HQW7VMxWaAAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFgg18nt1RG7R2XgiHIPB47TIYB6eb8wBF6TKHOUv1+RpaxkbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTphYjhkYjA1Yy1hZWNhLTQ3OTAtYjlhMy01ZWRlOWI3ZWY0MGQvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDo3NzlmMzRhMS1lNWU1LTQ4YzUtOTdjOC01MzQ0YzJmNWQ1NDhyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggJQ8ZmAmpqh+NFln+PPd6mX8z7oTWP2Vpbv/Ur3xCw8uiY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIPo84RP/6qKcOGDnhDN9O6dbIMhkwSfvRvNgggcXa4hdomN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYIJrcAe4OOSqQkIkdjiUESu4u8WfZHbg7aq5NKSSXYjjBdGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOmFiOGRiMDVjLWFlY2EtNDc5MC1iOWEzLTVlZGU5YjdlZjQwZAAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNo0bGrQTsVMl0hupF6Dciu9QAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6MDJkNjYxY2UtY2I5ZS00MzI3LWE2MGQtMDFlMzA1NGRlYjk5bHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaAqCgijOn9kSYgyJF3u7ggYAAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYICUPGZgJqaofjRZZ/jz3epl/M+6E1j9laW7/1K98QsPLpGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2hHYqiCiVfzXk3HQW7VMxWaAAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFgg18nt1RG7R2XgiHIPB47TIYB6eb8wBF6TKHOUv1+RpaxkbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTphYjhkYjA1Yy1hZWNhLTQ3OTAtYjlhMy01ZWRlOWI3ZWY0MGQvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDo3NzlmMzRhMS1lNWU1LTQ4YzUtOTdjOC01MzQ0YzJmNWQ1NDhyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggJQ8ZmAmpqh+NFln+PPd6mX8z7oTWP2Vpbv/Ur3xCw8uiY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIPo84RP/6qKcOGDnhDN9O6dbIMhkwSfvRvNgggcXa4hdomN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYIJrcAe4OOSqQkIkdjiUESu4u8WfZHbg7aq5NKSSXYjjBdGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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">
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        background-color: #f5f7fa; 
+        color: #1a202c; 
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    
+    .header {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+        color: white;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border-bottom: 2px solid #4ade80;
+    }
+    .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .logo { 
+        font-size: 26px; 
+        font-weight: 900; 
+        letter-spacing: 0.5px;
+        color: #4ade80;
+        text-shadow: 0 0 4px rgba(74, 222, 128, 0.25);
+    }
+    .status-badge { 
+        background: transparent; 
+        color: #4ade80; 
+        padding: 5px 12px; 
+        border-radius: 12px; 
+        font-size: 11px; 
+        font-weight: 700;
+        border: 1px solid rgba(74, 222, 128, 0.5);
+    }
+    .header-info { font-size: 12px; color: #e2e8f0; }
+    .header-info strong { color: #ffffff; font-weight: 700; }
+    
+    .container { max-width: 480px; margin: 0 auto; padding: 16px; }
+    
+    .section { background: white; border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+    .section-title { font-size: 13px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .section-title::before { content: ''; width: 3px; height: 14px; background: #4ade80; border-radius: 2px; }
+    
+    .optional-tag { font-size: 9px; color: #94a3b8; font-weight: 400; text-transform: none; margin-left: 4px; }
+    
+    .site-form { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px; margin-bottom: 12px; }
+    .form-group { margin-bottom: 10px; }
+    .form-label { display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 4px; text-transform: uppercase; }
+    .input-with-mic { display: flex; gap: 6px; }
+    .form-input { flex: 1; padding: 8px; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 13px; }
+    .form-input:focus { outline: none; border-color: #4ade80; }
+    .mic-btn { 
+        width: 38px; 
+        background: #fff; 
+        border: 1px solid #e2e8f0; 
+        border-radius: 4px; 
+        cursor: pointer; 
+        font-size: 16px;
+        transition: all 0.2s;
+    }
+    .mic-btn:hover { background: #f1f5f9; }
+    .mic-btn.listening { 
+        background: #ef4444; 
+        color: white; 
+        border-color: #ef4444;
+        animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+    }
+    
+    .btn-save-site { width: 100%; padding: 10px; background: #1e3a5f; color: #4ade80; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .btn-save-site:hover { background: #0f172a; }
+    
+    .add-worker-form { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 12px; margin-bottom: 12px; }
+    .btn-add { width: 100%; padding: 10px; background: #4ade80; color: #0f172a; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .btn-add:hover { background: #22c55e; }
+    
+    .worker { display: flex; align-items: center; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; background: #fafbfc; position: relative; }
+    .worker:hover { background: #f1f5f9; }
+    .worker.selected { border-color: #4ade80; background: #f0fdf4; box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.3); }
+    .worker-avatar { width: 40px; height: 40px; border-radius: 50%; background: #1e3a5f; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #4ade80; margin-right: 12px; flex-shrink: 0; }
+    .worker-info { flex: 1; }
+    .worker-name { font-weight: 600; font-size: 14px; color: #1e293b; margin-bottom: 2px; }
+    .worker-courses { font-size: 11px; color: #64748b; }
+    .worker-delete { position: absolute; top: 8px; right: 8px; background: #ef4444; color: white; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 12px; display: none; }
+    .worker:hover .worker-delete { display: block; }
+    
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-right: 4px; margin-bottom: 2px; }
+    .badge-ok { background: #dcfce7; color: #166534; border: 1px solid #4ade80; }
+    .badge-danger { background: #fee2e2; color: #991b1b; }
+    .badge-warn { background: #fef3c7; color: #92400e; }
+    
+    .zones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .zone { background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px 10px; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .zone:hover { background: #f1f5f9; border-color: #4ade80; }
+    .zone-risk { border-left: 3px solid #ef4444; }
+    .zone-name { font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 2px; }
+    .zone-type { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; }
+    .zone-risk-tag { display: inline-block; background: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 8px; font-size: 9px; font-weight: 700; margin-top: 4px; }
+    
+    .btn-primary { width: 100%; padding: 14px; background: #1e3a5f; color: #4ade80; border: none; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; margin-bottom: 10px; }
+    .btn-primary:hover { background: #0f172a; }
+    .btn-secondary { width: 100%; padding: 14px; background: #ef4444; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 16px; }
+    .btn-secondary:hover { background: #dc2626; }
+    
+    .report-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid #1e3a5f; }
+    .report-title { font-size: 14px; font-weight: 700; color: #1e3a5f; text-transform: uppercase; }
+    .report-date { font-size: 11px; color: #64748b; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { text-align: left; padding: 8px 6px; color: #1e3a5f; font-weight: 700; font-size: 10px; text-transform: uppercase; border-bottom: 2px solid #1e3a5f; }
+    td { padding: 10px 6px; border-bottom: 1px solid #e2e8f0; color: #1e293b; }
+    tr:last-child td { border-bottom: none; }
+    
+    .alert-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .alert-overlay.active { display: flex; }
+    .alert-box { background: white; border-radius: 8px; padding: 24px; max-width: 360px; width: 100%; border-left: 4px solid #ef4444; }
+    .alert-icon { width: 48px; height: 48px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 12px; }
+    .alert-title { font-size: 16px; font-weight: 700; color: #991b1b; margin-bottom: 6px; }
+    .alert-message { font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.5; }
+    .alert-btn { background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%; }
+    
+    .instruction { background: #f0fdf4; border: 1px solid #4ade80; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #166534; margin-bottom: 16px; }
+    .course-alert { background: #fef3c7; border-left: 3px solid #f59e0b; padding: 8px 12px; border-radius: 4px; margin-top: 8px; font-size: 11px; color: #92400e; }
+    
+    .voice-status { font-size: 11px; color: #16a34a; margin-top: 4px; display: none; }
+    .voice-status.active { display: block; }
+    
+    /* LICENCIA */
+    .license-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+    .license-overlay.active { display: flex; }
+    .license-box { background: white; border-radius: 8px; padding: 24px; max-width: 400px; width: 100%; border-left: 4px solid #2d5a87; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+    .license-title { font-size: 16px; font-weight: 700; color: #1e3a5f; margin-bottom: 12px; }
+    .license-input { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 12px; font-family: ui-monospace, Menlo, monospace; word-break: break-all; margin-bottom: 12px; }
+    .license-btn { background: #2d5a87; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%; }
+    .license-error { color: #ef4444; font-size: 12px; margin-top: 8px; display: none; }
+    
+    /* PANTALLA DE LICENCIA VENCIDA */
+    .expired-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 3000; align-items: center; justify-content: center; padding: 20px; }
+    .expired-overlay.active { display: flex; }
+    .expired-box { background: white; border-radius: 8px; padding: 30px; max-width: 400px; width: 100%; text-align: center; border-left: 4px solid #ef4444; }
+    .expired-title { font-size: 18px; font-weight: 700; color: #991b1b; margin-bottom: 12px; }
+    .expired-message { font-size: 14px; color: #475569; margin-bottom: 20px; line-height: 1.5; }
+    .expired-link { display: block; padding: 12px; border-radius: 6px; font-weight: 600; text-decoration: none; margin-bottom: 8px; color: white; background: #16a34a; }
+    .expired-link.alt { background: #2d5a87; }
+    .expired-link.ghost { background: transparent; color: #2d5a87; border: 1px solid #2d5a87; cursor: pointer; font-size: 14px; width: 100%; }
+    
+    .lic-bar { display: none; background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; border-radius: 6px; padding: 10px 14px; font-size: 12px; margin-bottom: 16px; align-items: center; justify-content: space-between; gap: 8px; }
+    .lic-bar.on { display: flex; }
+    .lic-bar button { background: #92400e; color: white; border: 0; border-radius: 6px; padding: 6px 12px; font-weight: 600; cursor: pointer; }
+
+
+    @media print {
+        body { background: white; }
+        .no-print { display: none !important; }
+        .container { max-width: 100%; padding: 0; }
+        .section { box-shadow: none; border: none; padding: 0; }
+        #reportCard { display: block !important; }
+    }
+</style>
+</head>
+<body>
+
+<div class="header no-print">
+    <div class="header-top">
+        <div class="logo">Safe-ID</div>
+        <div class="status-badge">● EN LÍNEA</div>
+    </div>
+    <div class="header-info">
+        Obra: <strong id="obraName">Sin configurar</strong> · Supervisor: <strong id="supervisorName">Sin configurar</strong>
+    </div>
+    <div class="header-info" id="licInfo" style="margin-top:4px;opacity:.75"></div>
+</div>
+
+<div class="container">
+
+    <div class="lic-bar no-print" id="licBar"><span id="licBarTxt"></span><button onclick="openActivation()" id="licBarBtn">Renovar</button></div>
+
+    <div class="instruction no-print">
+        <span>ℹ️</span>
+        <span>Todos los campos son opcionales. Usa el micrófono 🎤 para dictar en vez de escribir.</span>
+    </div>
+
+    <div class="section no-print">
+        <div class="section-title">Datos de la Obra <span class="optional-tag">(opcional)</span></div>
+        <div class="site-form">
+            <div class="form-group">
+                <label class="form-label">Empresa / Obra</label>
+                <div class="input-with-mic">
+                    <input type="text" class="form-input" id="siteName" placeholder="Constructora ABC - Obra Las Condes">
+                    <button class="mic-btn" onclick="startDictation('siteName', this)">🎤</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Supervisor / Capataz</label>
+                <div class="input-with-mic">
+                    <input type="text" class="form-input" id="siteSupervisor" placeholder="Carlos Rodríguez">
+                    <button class="mic-btn" onclick="startDictation('siteSupervisor', this)">🎤</button>
+                </div>
+                <div class="voice-status" id="voiceStatus-siteSupervisor">🔴 Escuchando... habla ahora</div>
+            </div>
+            <button class="btn-save-site" onclick="saveSiteData()">💾 Guardar datos</button>
+        </div>
+    </div>
+
+    <div class="section no-print">
+        <div class="section-title">Agregar Trabajador <span class="optional-tag">(opcional)</span></div>
+        <div class="add-worker-form">
+            <div class="form-group">
+                <label class="form-label">Nombre completo</label>
+                <div class="input-with-mic">
+                    <input type="text" class="form-input" id="workerName" placeholder="Juan Pérez">
+                    <button class="mic-btn" onclick="startDictation('workerName', this)">🎤</button>
+                </div>
+                <div class="voice-status" id="voiceStatus-workerName">🔴 Escuchando... habla ahora</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Cursos vigentes</label>
+                <div class="input-with-mic">
+                    <input type="text" class="form-input" id="workerCourses" placeholder="Altura, Primeros Auxilios">
+                    <button class="mic-btn" onclick="startDictation('workerCourses', this)">🎤</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Cursos vencidos</label>
+                <div class="input-with-mic">
+                    <input type="text" class="form-input" id="workerExpiredCourses" placeholder="Trabajo en Caliente">
+                    <button class="mic-btn" onclick="startDictation('workerExpiredCourses', this)">🎤</button>
+                </div>
+            </div>
+            <button class="btn-add" onclick="addWorker()">+ Agregar Trabajador</button>
+        </div>
+    </div>
+
+    <div class="section no-print">
+        <div class="section-title">Personal en Obra (<span id="workerCount">0</span>)</div>
+        <div id="workersList"></div>
+        <div id="courseAlerts"></div>
+    </div>
+
+    <div class="section no-print">
+        <div class="section-title">Zonas de la Obra</div>
+        <div class="zones-grid">
+            <div class="zone" onclick="assignZone('Piso 1', false)">
+                <div class="zone-name">Piso 1</div><div class="zone-type">Zona 1 · Riesgo Bajo</div>
+            </div>
+            <div class="zone zone-risk" onclick="assignZone('Piso 20 (Altura)', true, 'Altura')">
+                <div class="zone-name">Piso 20</div><div class="zone-type">Zona 2 · Trabajo en Altura</div><div class="zone-risk-tag">⚠ REQUIERE CURSO</div>
+            </div>
+            <div class="zone zone-risk" onclick="assignZone('Zona Caliente', true, 'Caliente')">
+                <div class="zone-name">Zona Caliente</div><div class="zone-type">Zona 3 · Soldadura</div><div class="zone-risk-tag">⚠ REQUIERE CURSO</div>
+            </div>
+            <div class="zone" onclick="assignZone('Jaula Residuos', false)">
+                <div class="zone-name">Jaula Residuos</div><div class="zone-type">Zona 4 · Riesgo Medio</div>
+            </div>
+            <div class="zone" onclick="assignZone('Estación de Emergencia', false)">
+                <div class="zone-name">Emergencia</div><div class="zone-type">Zona 5 · Punto Seguro</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-primary no-print" onclick="generateReport()">📊 Generar Reporte en Pantalla</button>
+    <button class="btn-secondary no-print" onclick="downloadPDF()">📄 Guardar como PDF</button>
+
+    <div class="section" id="reportCard" style="display:none;">
+        <div class="report-header">
+            <div>
+                <div class="report-title">📊 REPORTE DE CONTROL DE ACCESO</div>
+                <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Safe-ID · <span id="reportObra">Sin configurar</span></div>
+            </div>
+            <div class="report-date" id="reportDate"></div>
+        </div>
+        <table>
+            <thead><tr><th>Trabajador</th><th>Ubicación</th><th>Cursos</th><th>Estado</th></tr></thead>
+            <tbody id="reportBody"></tbody>
+        </table>
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0; font-size: 10px; color: #94a3b8; text-align: center;">
+            Documento generado por Safe-ID · Referencia normativa: DS 40 y Ley 16.744<br>
+            Supervisor: <span id="reportSupervisor">Sin configurar</span>
+        </div>
+    </div>
+
+</div>
+
+<div class="alert-overlay no-print" id="alertOverlay">
+    <div class="alert-box">
+        <div class="alert-icon">🚫</div>
+        <div class="alert-title">🚨 ACCESO DENEGADO</div>
+        <div class="alert-message">
+            <strong id="alertWorkerName"></strong> no puede ingresar a <strong id="alertZoneName"></strong>.<br><br>
+            <strong>Motivo:</strong> No cuenta con el curso requerido o está vencido.<br>
+            <strong>Acción:</strong> Reubicar en zona segura y notificar al prevencionista.
+        </div>
+        <button class="alert-btn" onclick="closeAlert()">Entendido, Registrar Incidencia</button>
+    </div>
+</div>
+
+<!-- PANTALLA DE LICENCIA -->
+<div class="license-overlay" id="licenseOverlay">
+    <div class="license-box">
+        <div class="license-title">🔐 Activar Safe-ID</div>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 12px;">Ingrese el código de licencia proporcionado por Miguel Ángel Cabezas Figueroa.</p>
+        <textarea class="license-input" id="licenseInput" rows="5" placeholder="Pegue aquí el código de licencia completo"></textarea>
+        <button class="license-btn" onclick="validateLicense()">Activar</button>
+        <div class="license-error" id="licenseError">Código inválido o vencido. Contacte al proveedor.</div>
+        <div style="margin-top:12px;font-size:12px;color:#64748b;">¿No tiene código? <a id="licWa" target="_blank" rel="noopener">WhatsApp</a> · <a id="licMail">Correo</a></div>
+        <button class="expired-link ghost" id="licClose" onclick="closeLicense()" style="display:none;margin:12px 0 0;">Cerrar</button>
+    </div>
+</div>
+
+<!-- PANTALLA DE LICENCIA VENCIDA -->
+<div class="expired-overlay" id="expiredOverlay">
+    <div class="expired-box">
+        <div class="expired-title">⚠️ Licencia Vencida</div>
+        <div class="expired-message">
+            <span id="expiredDetail">Su licencia de Safe-ID ha expirado.</span><br><br>
+            Para renovar, contacte a:<br>
+            <strong>Miguel Ángel Cabezas Figueroa</strong><br>
+            Asesor de Prevención de Riesgos Laborales
+        </div>
+        <a class="expired-link" id="expWa" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <a class="expired-link alt" id="expMail">Escribir por correo</a>
+        <button class="expired-link ghost" onclick="openActivation()">Tengo un código nuevo</button>
+    </div>
+</div>
+
+<script>
+    // ============================================
+    // CLAVE PÚBLICA (la del generador amarillo; solo verifica, no firma)
+    // ============================================
+    const LIC_PUB = {"kty":"EC","x":"reIygAle_2oxL5fATpSSTBYjUBqWfvE5IJu92AXDBNU","y":"FY9KOfWCSQX6YHbCdvmwdrC2n4Yc1Pr55y3LRqJROHY","crv":"P-256"};
+    const SOPORTE = { nombre: 'Miguel Ángel Cabezas Figueroa', whatsapp: '56957577510', correo: 'michaelroocker.macf31@gmail.com' };
+    const PRODUCTO = 'safeid';
+    const PN = { semaforo: 'Semáforo Humano', safeid: 'Safe-ID', voz: 'Dictado por voz', terreno: 'Prevención en terreno' };
+    const PLANES = { chica: 'Obra chica', mediana: 'Obra mediana', grande: 'Obra grande' };
+
+    // ============================================
+    // DATOS DE LA OBRA (se llenan desde la licencia)
+    // ============================================
+    let obraData = {
+        nombre: 'Edificio Corporativo Las Condes',
+        supervisor: 'J. Urra',
+        maxTrabajadores: 30,
+        plan: 'demo',
+        vencimiento: null
+    };
+
+    // ============================================
+    // MÓDULO DE LICENCIAS (firma digital EC P-256)
+    // Prueba de 7 días -> licencia con inicio y término de contrato
+    // ============================================
+    const TRIAL_DAYS = 7;
+    let APP_OK = false;
+    function b64u2bytes(t) { t = t.replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '='; const b = atob(t), a = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+    function lget(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function lset(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    function ldel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+    function cget(k) { try { const m = document.cookie.match(new RegExp('(?:^|; )' + k + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; } catch (e) { return null; } }
+    function cset(k, v) { try { document.cookie = k + '=' + encodeURIComponent(v) + '; max-age=315360000; path=/; SameSite=Lax'; } catch (e) {} }
+    const fmtLic = iso => new Date(iso + 'T12:00:00').toLocaleDateString('es-CL');
+    const licExpiry = p => p && p.e ? new Date(p.e + 'T23:59:59').getTime() : 0;
+    const licStart = p => p && p.f ? new Date(p.f + 'T00:00:00').getTime() : 0;
+    const el = id => document.getElementById(id);
+
+    async function verifyLicense(code) {
+        try {
+            const parts = String(code).replace(/\s+/g, '').split('.');
+            if (parts.length !== 2) return null;
+            const payload = b64u2bytes(parts[0]), sig = b64u2bytes(parts[1]);
+            const key = await crypto.subtle.importKey('jwk', LIC_PUB, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['verify']);
+            if (!await crypto.subtle.verify({ name: 'ECDSA', hash: 'SHA-256' }, key, sig, payload)) return null;
+            const p = JSON.parse(new TextDecoder().decode(payload));
+            return p && p.o ? p : null;
+        } catch (e) { return null; }
+    }
+
+    function setBar(txt, btn) {
+        const b = el('licBar');
+        if (!txt) { b.classList.remove('on'); return; }
+        el('licBarTxt').innerText = txt; el('licBarBtn').innerText = btn; b.classList.add('on');
+    }
+    function showLicenseScreen(msg) {
+        el('expiredOverlay').classList.remove('active');
+        const err = el('licenseError');
+        err.innerText = msg || ''; err.style.display = msg ? 'block' : 'none';
+        el('licClose').style.display = APP_OK ? 'block' : 'none';
+        el('licenseOverlay').classList.add('active');
+    }
+    function closeLicense() { el('licenseOverlay').classList.remove('active'); }
+    function openActivation() { showLicenseScreen(''); }
+
+    function showExpired(p) {
+        el('expiredDetail').innerText = 'La licencia de «' + p.o + '» terminó el ' + fmtLic(p.e) + '.';
+        el('licenseOverlay').classList.remove('active');
+        el('expiredOverlay').classList.add('active');
+    }
+
+    function applyLicense(p) {
+        APP_OK = true;
+        obraData.nombre = p.o;
+        obraData.supervisor = p.s || '—';
+        obraData.maxTrabajadores = p.m || 0;
+        obraData.plan = p.p || '';
+        obraData.vencimiento = p.e || null;
+        siteData.name = obraData.nombre;
+        if (p.s) siteData.supervisor = p.s;
+        el('siteName').value = siteData.name; el('siteSupervisor').value = siteData.supervisor || '';
+        updateSiteDisplay();
+        el('licInfo').innerText = (PLANES[obraData.plan] || 'Plan ' + obraData.plan) +
+            ' · ' + (obraData.maxTrabajadores ? 'hasta ' + obraData.maxTrabajadores + ' trabajadores' : 'sin límite de trabajadores') +
+            ' · ' + (obraData.vencimiento ? 'contrato hasta el ' + fmtLic(obraData.vencimiento) : 'sin fecha de término');
+        const a = document.createElement('a');
+        a.href = '#'; a.textContent = 'Cambiar código'; a.style.color = '#4ade80';
+        a.onclick = e => { e.preventDefault(); openActivation(); };
+        el('licInfo').append(' · ', a);
+        const dias = p.e ? Math.ceil((licExpiry(p) - Date.now()) / 86400000) : 999;
+        if (dias <= 15) setBar('Su licencia termina en ' + dias + ' día' + (dias === 1 ? '' : 's') + ' (' + fmtLic(p.e) + '). Para extenderla, avise a ' + SOPORTE.nombre + '.', 'Renovar');
+        else setBar('');
+        if (typeof renderWorkers === 'function') renderWorkers();
+        el('licenseOverlay').classList.remove('active');
+        el('expiredOverlay').classList.remove('active');
+    }
+
+    // Evalúa una licencia ya verificada. Devuelve true si queda activa.
+    function evaluateLicense(p) {
+        if (p.f && Date.now() < licStart(p)) { showLicenseScreen('Esta licencia comienza el ' + fmtLic(p.f) + '. Antes de esa fecha no se puede activar.'); return false; }
+        if (p.e && Date.now() > licExpiry(p)) { showExpired(p); return false; }
+        if (p.p !== 'personal' && (!Array.isArray(p.pr) || p.pr.indexOf(PRODUCTO) === -1)) {
+            const inc = Array.isArray(p.pr) && p.pr.length ? p.pr.map(x => PN[x] || x).join(', ') : 'otro producto';
+            showLicenseScreen('Esta licencia no incluye Safe-ID (incluye: ' + inc + '). Solicite una licencia para Safe-ID.');
+            return false;
+        }
+        applyLicense(p);
+        return true;
+    }
+
+    function setupSupport() {
+        const wa = 'https://wa.me/' + SOPORTE.whatsapp + '?text=' + encodeURIComponent('Hola, quiero una licencia de Safe-ID.');
+        const mail = 'mailto:' + SOPORTE.correo + '?subject=' + encodeURIComponent('Licencia Safe-ID');
+        el('licWa').href = wa; el('licMail').href = mail;
+        el('expWa').href = 'https://wa.me/' + SOPORTE.whatsapp + '?text=' + encodeURIComponent('Hola, quiero renovar la licencia de Safe-ID.');
+        el('expMail').href = 'mailto:' + SOPORTE.correo + '?subject=' + encodeURIComponent('Renovación licencia Safe-ID');
+    }
+
+    async function checkLicense() {
+        setupSupport();
+        const now = Date.now();
+        const last = Math.max(+lget('safeid-last') || 0, +cget('safeid_last') || 0);
+        if (last - now > 6 * 3600 * 1000) { showLicenseScreen('La fecha del teléfono parece atrasada. Corríjala y vuelva a abrir la aplicación.'); return; }
+        lset('safeid-last', String(Math.max(last, now))); cset('safeid_last', String(Math.max(last, now)));
+
+        const saved = lget('safeid-lic');
+        if (saved) {
+            if (!(window.crypto && crypto.subtle)) { showLicenseScreen('Este navegador no permite verificar la licencia. Abra la aplicación desde su enlace https.'); return; }
+            const p = await verifyLicense(saved);
+            if (!p) { ldel('safeid-lic'); showLicenseScreen('El código guardado no se pudo verificar. Ingrese un código válido.'); return; }
+            evaluateLicense(p);
+            return;
+        }
+
+        // Sin licencia: prueba gratuita de 7 días
+        let first = [+lget('safeid-t1') || 0, +cget('safeid_t1') || 0].filter(x => x > 0).reduce((m, x) => Math.min(m, x), Infinity);
+        if (!isFinite(first)) first = now;
+        lset('safeid-t1', String(first)); cset('safeid_t1', String(first));
+        const used = (now - first) / 86400000;
+        if (used > TRIAL_DAYS) { showLicenseScreen('Terminó la prueba gratuita de ' + TRIAL_DAYS + ' días. Para seguir usando Safe-ID necesita una licencia: contacte a ' + SOPORTE.nombre + '.'); return; }
+        const left = Math.max(1, Math.ceil(TRIAL_DAYS - used));
+        APP_OK = true;
+        el('licInfo').innerText = 'Prueba gratuita · quedan ' + left + ' día' + (left === 1 ? '' : 's');
+        setBar('Prueba gratuita: quedan ' + left + ' día' + (left === 1 ? '' : 's') + '.', 'Activar licencia');
+    }
+
+    async function validateLicense() {
+        const code = el('licenseInput').value.replace(/\s+/g, '');
+        const err = el('licenseError');
+        err.style.display = 'none';
+        if (!code) { err.innerText = 'Pegue el código de licencia.'; err.style.display = 'block'; return; }
+        if (!(window.crypto && crypto.subtle)) { err.innerText = 'Este navegador no permite verificar la licencia. Abra la aplicación desde su enlace https.'; err.style.display = 'block'; return; }
+        const p = await verifyLicense(code);
+        if (!p) { err.innerText = 'El código no es válido. Revise que esté completo y sin cortes.'; err.style.display = 'block'; return; }
+        if (evaluateLicense(p)) { lset('safeid-lic', code); el('licenseInput').value = ''; }
+    }
+
+
+    // ============================================
+    // LÓGICA DEL SAFE-ID
+    // ============================================
+    const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    let workers = [], assignments = {};
+    try { workers = JSON.parse(localStorage.getItem('safeid-workers') || '[]'); assignments = JSON.parse(localStorage.getItem('safeid-assign') || '{}'); } catch (e) { workers = []; assignments = {}; }
+    function persist() { try { localStorage.setItem('safeid-workers', JSON.stringify(workers)); localStorage.setItem('safeid-assign', JSON.stringify(assignments)); } catch (e) {} }
+    let selectedWorkerId = null;
+    let siteData = { name: '', supervisor: '' };
+
+    function startDictation(inputId, button) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert('⚠ Tu navegador no soporta dictado por voz. Usa Chrome en Android o Safari en iPhone.');
+            return;
+        }
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'es-CL';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        const statusEl = document.getElementById('voiceStatus-' + inputId);
+        recognition.onstart = () => {
+            button.classList.add('listening');
+            button.textContent = '🔴';
+            if (statusEl) statusEl.classList.add('active');
+        };
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            const input = document.getElementById(inputId);
+            const currentText = input.value.trim();
+            input.value = currentText ? currentText + ', ' + transcript : transcript;
+        };
+        recognition.onerror = (event) => {
+            if (event.error === 'not-allowed') alert('⚠ Permite el acceso al micrófono en tu navegador.');
+        };
+        recognition.onend = () => {
+            button.classList.remove('listening');
+            button.textContent = '🎤';
+            if (statusEl) statusEl.classList.remove('active');
+        };
+        recognition.start();
+    }
+
+    function loadSiteData() {
+        const saved = localStorage.getItem('safeid_site');
+        if (saved) {
+            siteData = JSON.parse(saved);
+            document.getElementById('siteName').value = siteData.name || '';
+            document.getElementById('siteSupervisor').value = siteData.supervisor || '';
+            updateSiteDisplay();
+        }
+    }
+
+    function saveSiteData() {
+        siteData.name = document.getElementById('siteName').value.trim();
+        siteData.supervisor = document.getElementById('siteSupervisor').value.trim();
+        localStorage.setItem('safeid_site', JSON.stringify(siteData));
+        updateSiteDisplay();
+        alert('✓ Datos guardados');
+    }
+
+    function updateSiteDisplay() {
+        document.getElementById('obraName').innerText = siteData.name || 'Sin configurar';
+        document.getElementById('supervisorName').innerText = siteData.supervisor || 'Sin configurar';
+    }
+
+    function addWorker() {
+        const name = document.getElementById('workerName').value.trim();
+        const courses = document.getElementById('workerCourses').value.trim();
+        const expiredCourses = document.getElementById('workerExpiredCourses').value.trim();
+        if (!name) { alert('⚠ Ingrese al menos el nombre del trabajador'); return; }
+        if (obraData.maxTrabajadores && workers.length >= obraData.maxTrabajadores) { alert('⚠ Su licencia permite hasta ' + obraData.maxTrabajadores + ' trabajadores.'); return; }
+        const workerId = 'w' + Date.now();
+        workers.push({
+            id: workerId,
+            name: name,
+            courses: courses ? courses.split(',').map(c => c.trim()).filter(c => c) : [],
+            expiredCourses: expiredCourses ? expiredCourses.split(',').map(c => c.trim()).filter(c => c) : []
+        });
+        persist();
+        renderWorkers();
+        document.getElementById('workerName').value = '';
+        document.getElementById('workerCourses').value = '';
+        document.getElementById('workerExpiredCourses').value = '';
+    }
+
+    function deleteWorker(id) {
+        workers = workers.filter(w => w.id !== id);
+        delete assignments[id];
+        persist();
+        renderWorkers();
+    }
+
+    function renderWorkers() {
+        const list = document.getElementById('workersList');
+        const alerts = document.getElementById('courseAlerts');
+        list.innerHTML = '';
+        alerts.innerHTML = '';
+        document.getElementById('workerCount').innerText = workers.length + (obraData.maxTrabajadores ? ' / ' + obraData.maxTrabajadores : '');
+        workers.forEach(worker => {
+            const initials = worker.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            const workerDiv = document.createElement('div');
+            workerDiv.className = 'worker';
+            workerDiv.id = worker.id;
+            workerDiv.onclick = () => selectWorker(worker.id);
+            let coursesHtml = '';
+            worker.courses.forEach(c => coursesHtml += `<span class="badge badge-ok">${esc(c)}</span>`);
+            worker.expiredCourses.forEach(c => coursesHtml += `<span class="badge badge-danger">${esc(c)} (Vencido)</span>`);
+            workerDiv.innerHTML = `
+                <div class="worker-avatar">${initials}</div>
+                <div class="worker-info">
+                    <div class="worker-name">${esc(worker.name)}</div>
+                    <div class="worker-courses">${coursesHtml || 'Sin cursos'}</div>
+                </div>
+                <button class="worker-delete" onclick="event.stopPropagation(); deleteWorker('${worker.id}')">✕</button>
+            `;
+            list.appendChild(workerDiv);
+            if (worker.expiredCourses.length > 0) {
+                alerts.innerHTML += `<div class="course-alert">⚠ <strong>${esc(worker.name)}</strong> tiene cursos vencidos. Notificar al prevencionista.</div>`;
+            }
+        });
+    }
+
+    function selectWorker(id) {
+        document.querySelectorAll('.worker').forEach(w => w.classList.remove('selected'));
+        document.getElementById(id).classList.add('selected');
+        selectedWorkerId = id;
+    }
+
+    function assignZone(zoneName, requiresCourse, requiredCourseName) {
+        if (!selectedWorkerId) { alert('⚠ Primero seleccione un trabajador.'); return; }
+        const worker = workers.find(w => w.id === selectedWorkerId);
+        if (!worker) return;
+        if (requiresCourse && requiredCourseName) {
+            const hasCourse = worker.courses.some(c => c.toLowerCase().includes(requiredCourseName.toLowerCase()));
+            if (!hasCourse) {
+                document.getElementById('alertWorkerName').innerText = worker.name;
+                document.getElementById('alertZoneName').innerText = zoneName;
+                document.getElementById('alertOverlay').classList.add('active');
+                playAlertSound();
+                return;
+            }
+        }
+        assignments[worker.id] = zoneName;
+        persist();
+        alert(`✓ ${worker.name} asignado a ${zoneName}`);
+        document.querySelectorAll('.worker').forEach(w => w.classList.remove('selected'));
+        selectedWorkerId = null;
+    }
+
+    function closeAlert() { document.getElementById('alertOverlay').classList.remove('active'); }
+
+    function playAlertSound() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(440, ctx.currentTime);
+            osc.frequency.setValueAtTime(880, ctx.currentTime + 0.1);
+            osc.frequency.setValueAtTime(440, ctx.currentTime + 0.2);
+            gain.gain.setValueAtTime(0.1, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.5);
+            osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.5);
+        } catch(e) {}
+    }
+
+    function generateReport() {
+        const tbody = document.getElementById('reportBody');
+        tbody.innerHTML = '';
+        const now = new Date();
+        document.getElementById('reportDate').innerText = now.toLocaleString('es-CL');
+        document.getElementById('reportObra').innerText = siteData.name || 'Sin configurar';
+        document.getElementById('reportSupervisor').innerText = siteData.supervisor || 'Sin configurar';
+        if (workers.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">No hay trabajadores registrados</td></tr>';
+        } else {
+            workers.forEach(worker => {
+                const zone = assignments[worker.id] || 'Sin asignar';
+                const hasExpired = worker.expiredCourses.length > 0;
+                const hasValid = worker.courses.length > 0;
+                let statusBadge = '';
+                if (hasExpired) statusBadge = '<span class="badge badge-danger">Regularizar</span>';
+                else if (hasValid) statusBadge = '<span class="badge badge-ok">Apto</span>';
+                else statusBadge = '<span class="badge badge-warn">Sin cursos</span>';
+                const coursesList = [...worker.courses, ...worker.expiredCourses.map(c => c + ' (Vencido)')].join(', ') || 'Ninguno';
+                tbody.innerHTML += `<tr><td><strong>${esc(worker.name)}</strong></td><td>${esc(zone)}</td><td style="font-size:10px;">${esc(coursesList)}</td><td>${statusBadge}</td></tr>`;
+            });
+        }
+        document.getElementById('reportCard').style.display = 'block';
+    }
+
+    function downloadPDF() { generateReport(); setTimeout(() => window.print(), 200); }
+
+    loadSiteData();
+    renderWorkers();
+    checkLicense();
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+        window.addEventListener('load', () => { try { navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (e) {} });
+    }
+</script>
+</body>
+</html>
